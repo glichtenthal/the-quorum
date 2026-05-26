@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Quorum — Quit the job for the side project?</title>
+<style>
+  :root{
+    --ink:#1C1A1D; --ink-2:#252327; --ink-3:#2f2d31;
+    --lime:#E2F075; --text:#ffffff; --muted:#a7a4ab; --line:#3a383d;
+    --warn:#ffb4a2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--ink);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+    line-height:1.55;padding:48px 24px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:980px;margin:0 auto}
+  .eyebrow{color:var(--lime);font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
+  h1{font-size:30px;line-height:1.2;margin:10px 0 18px;font-weight:650;letter-spacing:-.01em}
+  h2{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+    font-weight:600;margin:46px 0 16px;border-bottom:1px solid var(--line);padding-bottom:10px}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+  .badge{font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px;
+    border:1px solid var(--line);color:var(--muted)}
+  .badge.door{background:rgba(226,240,117,.1);border-color:var(--lime);color:var(--lime)}
+  .spread{background:var(--ink-2);border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+  .spread .note{font-size:14px;color:#ececec;margin-bottom:6px}
+  .spread .note strong{color:var(--lime)}
+  .spread .group{padding:12px 0;border-bottom:1px solid var(--line)}
+  .spread .group:last-child{border-bottom:none}
+  .opt{font-weight:650;font-size:15px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .opt .count{color:var(--lime);font-size:13px;font-weight:600;white-space:nowrap}
+  .row{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted);padding:3px 0}
+  .row .who{color:var(--text);min-width:140px}
+  .dot{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--lime);flex:none}
+  .dot.high{background:var(--lime)}
+  .dot.medium{background:linear-gradient(90deg,var(--lime) 50%,transparent 50%)}
+  .dot.low{background:transparent}
+  .dot.none{border-style:dashed;background:transparent}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+  .card{background:var(--ink-2);border:1px solid var(--line);border-radius:14px;padding:20px;
+    transition:border-color .15s}
+  .card:hover{border-color:var(--lime)}
+  .card .name{font-size:17px;font-weight:650}
+  .card .lane{color:var(--lime);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    font-weight:600;margin-top:2px}
+  .card .verdict{font-size:14px;margin:14px 0;font-style:italic;color:#ececec}
+  .card ul{list-style:none;display:flex;flex-direction:column;gap:7px;margin:0 0 16px}
+  .card li{font-size:13.5px;color:var(--muted);padding-left:16px;position:relative}
+  .card li:before{content:"";position:absolute;left:0;top:8px;width:5px;height:5px;
+    border-radius:50%;background:var(--lime)}
+  .meta{border-top:1px solid var(--line);padding-top:12px;font-size:13px;display:flex;
+    flex-direction:column;gap:5px}
+  .meta .k{color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+  .meta .flip{color:#cfcdd2}
+  .peer{display:flex;flex-direction:column;gap:10px}
+  .peer .p{background:var(--ink-2);border:1px solid var(--line);border-left:3px solid var(--lime);
+    border-radius:0 10px 10px 0;padding:14px 18px;font-size:14px;color:#ececec}
+  .peer .p .lbl{font-weight:650;color:var(--lime);margin-right:8px}
+  .chair{background:linear-gradient(180deg,var(--ink-3),var(--ink-2));
+    border:1px solid var(--lime);border-radius:16px;padding:28px}
+  .chair .block{margin-bottom:18px}
+  .chair .block:last-child{margin-bottom:0}
+  .chair .h{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+    font-weight:600;margin-bottom:6px}
+  .chair p{font-size:15px;color:#ececec}
+  .call{background:rgba(226,240,117,.12);border:1px solid var(--lime);border-radius:12px;
+    padding:18px 20px}
+  .call .h{color:var(--lime)}
+  .call p{color:#fff;font-size:16px;font-weight:550}
+  .premortem{border:1px dashed var(--line);border-radius:12px;padding:16px 18px}
+  .minority{border:1px solid var(--warn);border-radius:12px;padding:16px 18px;background:rgba(255,180,162,.06)}
+  .minority .h{color:var(--warn)}
+  .dealbreaker{color:var(--warn)}
+  .foot{margin-top:40px;text-align:center;color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">The Quorum</div>
+  <h1>Should I quit my job to go full-time on my side project?</h1>
+  <div class="badges">
+    <span class="badge door">One-way door</span>
+    <span class="badge">Stakes: high</span>
+    <span class="badge">5 members seated</span>
+    <span class="badge">Example</span>
+  </div>
+
+  <h2>The Spread</h2>
+  <div class="spread">
+    <p class="note"><strong>The frame is the problem.</strong> "Quit or stay" makes leaping feel brave and staying feel cowardly — a terrible way to make a financial bet. Four of five reject a blind leap now, but they split on what to do instead, and one makes a real, high-conviction case <em>for</em> jumping.</p>
+    <div class="group">
+      <div class="opt">Don't quit yet — protect income, build toward a signal <span class="count">2 backing</span></div>
+      <div class="row"><span class="dot high"></span><span class="who">The Skeptic</span><span>med-high confidence</span></div>
+      <div class="row"><span class="dot high"></span><span class="who">The Operator</span><span>med-high confidence</span></div>
+    </div>
+    <div class="group">
+      <div class="opt">Leap now — focus and timing beat the safety net <span class="count">1 backing</span></div>
+      <div class="row"><span class="dot high"></span><span class="who">The Strategist</span><span>med-high confidence</span></div>
+    </div>
+    <div class="group">
+      <div class="opt">Off the menu — challenged the question <span class="count">2 voices</span></div>
+      <div class="row"><span class="dot none"></span><span class="who">The Analyst</span><span>names the decisive unknown — declines to pick</span></div>
+      <div class="row"><span class="dot high"></span><span class="who">The Reframer</span><span>replace the question with a milestone</span></div>
+    </div>
+  </div>
+
+  <h2>The Council</h2>
+  <div class="cards">
+
+    <div class="card">
+      <div class="name">The Analyst</div>
+      <div class="lane">Epistemics</div>
+      <div class="verdict">"You're deciding on conviction, not evidence. The two numbers that settle this aren't on the table."</div>
+      <ul>
+        <li>The framing assumes the obstacle is courage or hours. The actual predictor of success is validated demand — which is unstated.</li>
+        <li>"Full-time would let me really go for it" is a belief, not a finding. Most projects stall on demand, and hours don't manufacture demand.</li>
+        <li>Runway is the other missing fact: months of survival with zero income changes this from a leap into a transition — or doesn't.</li>
+      </ul>
+      <div class="meta">
+        <span><span class="k">Decisive unknown</span> Is there real, paying traction yet (revenue / retention) independent of your spare-time effort — and how many months of runway do you actually have?</span>
+        <span class="flip"><span class="k">Would flip if</span> the project already covers your basic costs — then it's not a gamble, it's a handoff.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="name">The Skeptic</div>
+      <div class="lane">Downside</div>
+      <div class="verdict">"Quitting doesn't add demand. It adds a runway clock to the same unsolved problem — under worse judgment."</div>
+      <ul>
+        <li>Income is what de-risks a young project. Remove it and financial pressure pushes you toward desperate, short-term decisions.</li>
+        <li>Most projects that die full-time die of no demand, not no time. The leap doesn't fix the actual failure mode.</li>
+        <li>"I just need more time" is usually a comfortable cover for "it isn't working yet." Be honest about which one this is.</li>
+      </ul>
+      <div class="meta">
+        <span><span class="k">Recommends</span> Stay and build until there's a demand signal · med-high confidence</span>
+        <span class="flip"><span class="k">Would flip if</span> the project already generates enough to cover runway, or the job is genuinely blocking its only time-sensitive window.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="name">The Strategist</div>
+      <div class="lane">Time</div>
+      <div class="verdict">"You can't cross a chasm in two careful jumps. The real risk isn't leaping early — it's never leaping."</div>
+      <ul>
+        <li>The regret asymmetry favors action: a failed leap is recoverable (you get another job; the story compounds). A project that never got real focus is just gone.</li>
+        <li>Obligations only grow. If you're ever going to bet, the cheapest time to be wrong is now.</li>
+        <li>Milestone-chasing while employed is how promising projects quietly stay hobbies for five years.</li>
+      </ul>
+      <div class="meta">
+        <span><span class="k">Recommends</span> Quit and go full-time — if you have any real runway · med-high confidence</span>
+        <span class="flip"><span class="k">Would flip if</span> you have dependents, high fixed costs, or near-zero runway — then the downside stops being recoverable.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="name">The Operator</div>
+      <div class="lane">Execution</div>
+      <div class="verdict">"Buy the focus without buying the runway risk. There's a path between 'quit' and 'stay.'"</div>
+      <ul>
+        <li>Full-time buys ~2–3x hours, but the binding constraint is usually distribution, not hours — and panic doesn't fix distribution.</li>
+        <li>The do-nothing baseline (keep the job, keep building nights/weekends) is underrated: slow but survivable, and it lets the project prove itself.</li>
+        <li>Fastest path to truth: negotiate a leave, a 4-day week, or a protected 90-day sprint, with a hard go/no-go metric attached.</li>
+      </ul>
+      <div class="meta">
+        <span><span class="k">Recommends</span> Buy protected time + set a quit-trigger, don't quit cold · med-high confidence</span>
+        <span class="flip"><span class="k">Would flip if</span> the experiment genuinely can't run part-time (needs daytime customer access) and you have 12+ months runway.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="name">The Reframer</div>
+      <div class="lane">The frame</div>
+      <div class="verdict">"Stop asking whether to quit. Ask what milestone would make quitting the obvious, low-drama choice."</div>
+      <ul>
+        <li>"Quit or stay" is a courage frame — and courage is not a business metric. It pressures you to prove something to yourself instead of to the market.</li>
+        <li>Define the falsifiable signal in advance (a revenue number, a retention curve, demand covering runway). Then you're not leaping on faith — you're crossing a line you set.</li>
+        <li>This dissolves the tension: you don't have to be brave or cautious. You have to be specific.</li>
+      </ul>
+      <div class="meta">
+        <span><span class="k">Recommends</span> Reframe → "what milestone turns quitting from a leap into a step?" · med-high confidence</span>
+        <span class="flip"><span class="k">Would flip if</span> an external forcing function (a layoff, the role ending) removes the choice — then it's not a free decision.</span>
+      </div>
+    </div>
+
+  </div>
+
+  <h2>Peer Review <span style="text-transform:none;letter-spacing:0;color:var(--muted)">· anonymized</span></h2>
+  <div class="peer">
+    <div class="p"><span class="lbl">A</span>Agrees with E that the milestone is just the operational form of "get the evidence first." Challenges C: the regret-asymmetry case assumes the downside is recoverable — but that's the exact variable nobody's verified. Don't promote a hopeful assumption to a premise.</div>
+    <div class="p"><span class="lbl">B</span>Backs D and E. Pushes hard on C: "you can't cross a chasm in two jumps" is a great line and a worse financial plan — quitting adds a runway clock to a demand problem it doesn't solve. Conviction isn't a substitute for customers.</div>
+    <div class="p"><span class="lbl">C</span>Holds the line. Concedes to A and B that runway is the gating fact — but argues the room is underweighting the cost of deferral. The failure mode they keep describing (leap too early) is real; the one they're living (never leap) is more common and less visible.</div>
+    <div class="p"><span class="lbl">D</span>What changed: concedes to C that some experiments genuinely need full-time or daytime access to even run. That raises the value of the "buy protected time" path — a way to get C's focus without C's runway risk. Moves slightly toward the leave/sprint option.</div>
+    <div class="p"><span class="lbl">E</span>Notes the whole quit-vs-stay fight dissolves once you name the line: B and C are really arguing about <em>where to set the milestone</em>, not whether to have one. The only frame everyone should reject outright is "courage" — bravery doesn't pay rent or prove demand.</div>
+  </div>
+
+  <h2>Chairman's Synthesis</h2>
+  <div class="chair">
+    <div class="block">
+      <div class="h">Where the room landed</div>
+      <p>Agreement that a blind binary leap right now is the wrong move — but a real split underneath, which is the useful part. The Skeptic says stay until demand shows; the Operator says buy protected time without quitting; the Strategist makes a genuine, high-conviction case for leaping on regret-asymmetry and focus. The two off-menu voices reject the framing itself: the Analyst names the gating facts (validated demand + runway), and the Reframer replaces "should I quit?" with "what milestone makes quitting a step instead of a leap?"</p>
+    </div>
+    <div class="block">
+      <div class="h">Key tensions</div>
+      <p>(1) The Skeptic/Operator caution vs. the Strategist's "cost of never leaping" — both are right about different, real failure modes. (2) The pro-leap case rests on the downside being recoverable, which is exactly the unverified variable. (3) "Courage" is the wrong axis entirely — this is a demand-and-runway question wearing a bravery costume.</p>
+    </div>
+    <div class="block call">
+      <div class="h">The call</div>
+      <p>Don't decide "quit vs. stay." Define the specific, falsifiable signal — demand that covers your runway, or a concrete revenue/retention number — that turns quitting from a leap into a step, and pre-commit to it as a trigger now, while your judgment is calm and unpaid-for. Meanwhile compress the test: negotiate the most protected time you can without quitting (a leave, a four-day week, a 90-day sprint) and put a hard go/no-go date on it. That converts a one-way door into something closer to two-way. If runway is thin or obligations are high, default to building until the signal fires; if runway is real and the market is genuinely time-sensitive, your trigger may already be met — in which case leap deliberately, not bravely.</p>
+    </div>
+    <div class="block premortem">
+      <div class="h">Pre-mortem · what this rests on</div>
+      <p>This assumes demand can be meaningfully tested without quitting. <strong>Flips if:</strong> the project genuinely can't be validated part-time — needs daytime customer access or full-time presence to even run — in which case the "buy protected time" path becomes essential and pure "stay" quietly fails. It also flips if an external forcing function (a layoff, the role ending) removes the choice and makes this moot.</p>
+    </div>
+    <div class="block minority">
+      <div class="h">Minority report · The Strategist</div>
+      <p>"I dissent from the milestone framing. Set the bar too cautiously — and it always gets set cautiously — and it becomes permanent deferral with a respectable name. Some things only become real when you commit fully; you cannot cross a chasm in two careful jumps. If you're young, light on fixed obligations, and have even a few months of runway, the expected value favors the leap now: the downside (you get another job) is more recoverable than it feels, and the upside (a real company) evaporates if it never gets your full focus. The danger isn't leaping too early. It's still being 'almost ready' three years from now."</p>
+    </div>
+    <div class="block">
+      <div class="h dealbreaker">Deal-breakers</div>
+      <p class="dealbreaker">Skeptic: quitting with near-zero runway turns every product decision into a survival decision and usually kills the project faster — don't. Operator: if you can't name the specific metric that would make you quit, you're not ready to quit for any amount of conviction.</p>
+    </div>
+  </div>
+
+  <div class="foot">Convened by The Quorum · disagreement is the feature, not the bug · illustrative example</div>
+
+</div>
+</body>
+</html>
