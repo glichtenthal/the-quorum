@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<!--
+  THE QUORUM — report scaffold. Fill the {{TOKENS}} and repeat the marked blocks.
+  - Duplicate <!-- MEMBER CARD --> per seated member (5, or 6 with the Steward). Delete unused.
+  - Duplicate <!-- SPREAD ROW --> per member.
+  - Duplicate <!-- PEER ROW --> per member (A–E/F).
+  - Group spread rows by backed option so clustering/splits read at a glance.
+  - Confidence sets the dot fill: high = solid lime, medium = half, low = outline.
+  - Keep it honest: if the room split, the spread should LOOK split.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Quorum — {{SHORT_TITLE}}</title>
+<style>
+  :root{
+    --ink:#1C1A1D; --ink-2:#252327; --ink-3:#2f2d31;
+    --lime:#E2F075; --text:#ffffff; --muted:#a7a4ab; --line:#3a383d;
+    --warn:#ffb4a2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--ink);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+    line-height:1.55;padding:48px 24px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:980px;margin:0 auto}
+  .eyebrow{color:var(--lime);font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
+  h1{font-size:30px;line-height:1.2;margin:10px 0 18px;font-weight:650;letter-spacing:-.01em}
+  h2{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+    font-weight:600;margin:46px 0 16px;border-bottom:1px solid var(--line);padding-bottom:10px}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+  .badge{font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px;
+    border:1px solid var(--line);color:var(--muted)}
+  .badge.door{background:rgba(226,240,117,.1);border-color:var(--lime);color:var(--lime)}
+
+  /* spread */
+  .spread{background:var(--ink-2);border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+  .spread .group{padding:12px 0;border-bottom:1px solid var(--line)}
+  .spread .group:last-child{border-bottom:none}
+  .opt{font-weight:650;font-size:15px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:baseline}
+  .opt .count{color:var(--lime);font-size:13px;font-weight:600}
+  .row{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted);padding:3px 0}
+  .row .who{color:var(--text);min-width:120px}
+  .dot{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--lime);flex:none}
+  .dot.high{background:var(--lime)}
+  .dot.medium{background:linear-gradient(90deg,var(--lime) 50%,transparent 50%)}
+  .dot.low{background:transparent}
+
+  /* member cards */
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+  .card{background:var(--ink-2);border:1px solid var(--line);border-radius:14px;padding:20px;
+    transition:border-color .15s}
+  .card:hover{border-color:var(--lime)}
+  .card .name{font-size:17px;font-weight:650}
+  .card .lane{color:var(--lime);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    font-weight:600;margin-top:2px}
+  .card .verdict{font-size:14px;margin:14px 0;font-style:italic;color:#ececec}
+  .card ul{list-style:none;display:flex;flex-direction:column;gap:7px;margin:0 0 16px}
+  .card li{font-size:13.5px;color:var(--muted);padding-left:16px;position:relative}
+  .card li:before{content:"";position:absolute;left:0;top:8px;width:5px;height:5px;
+    border-radius:50%;background:var(--lime)}
+  .meta{border-top:1px solid var(--line);padding-top:12px;font-size:13px;display:flex;
+    flex-direction:column;gap:5px}
+  .meta .k{color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+  .meta .flip{color:#cfcdd2}
+
+  /* peer review */
+  .peer{display:flex;flex-direction:column;gap:10px}
+  .peer .p{background:var(--ink-2);border:1px solid var(--line);border-left:3px solid var(--lime);
+    border-radius:0 10px 10px 0;padding:14px 18px;font-size:14px}
+  .peer .p .lbl{font-weight:650;color:var(--lime);margin-right:8px}
+
+  /* chairman */
+  .chair{background:linear-gradient(180deg,var(--ink-3),var(--ink-2));
+    border:1px solid var(--lime);border-radius:16px;padding:28px}
+  .chair .block{margin-bottom:18px}
+  .chair .block:last-child{margin-bottom:0}
+  .chair .h{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+    font-weight:600;margin-bottom:6px}
+  .chair p{font-size:15px;color:#ececec}
+  .call{background:rgba(226,240,117,.12);border:1px solid var(--lime);border-radius:12px;
+    padding:18px 20px}
+  .call .h{color:var(--lime)}
+  .call p{color:#fff;font-size:16px;font-weight:550}
+  .premortem{border:1px dashed var(--line);border-radius:12px;padding:16px 18px}
+  .minority{border:1px solid var(--warn);border-radius:12px;padding:16px 18px;background:rgba(255,180,162,.06)}
+  .minority .h{color:var(--warn)}
+  .dealbreaker{color:var(--warn)}
+  .foot{margin-top:40px;text-align:center;color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">The Quorum</div>
+  <h1>{{QUESTION}}</h1>
+  <div class="badges">
+    <span class="badge door">{{DOOR_TYPE}} door</span>
+    <span class="badge">Stakes: {{STAKES}}</span>
+    <span class="badge">{{ROSTER_COUNT}} members seated</span>
+    <span class="badge">{{DATE}}</span>
+  </div>
+
+  <h2>The Spread</h2>
+  <div class="spread">
+    <!-- SPREAD GROUP (one per backed option) -->
+    <div class="group">
+      <div class="opt">{{OPTION_NAME}} <span class="count">{{N}} backing</span></div>
+      <!-- SPREAD ROW -->
+      <div class="row"><span class="dot {{high|medium|low}}"></span><span class="who">{{MEMBER}}</span><span>{{confidence}} confidence</span></div>
+    </div>
+  </div>
+
+  <h2>The Council</h2>
+  <div class="cards">
+    <!-- MEMBER CARD -->
+    <div class="card">
+      <div class="name">{{MEMBER_NAME}}</div>
+      <div class="lane">{{LANE}}</div>
+      <div class="verdict">"{{VERDICT}}"</div>
+      <ul>
+        <li>{{BULLET_1}}</li>
+        <li>{{BULLET_2}}</li>
+        <li>{{BULLET_3}}</li>
+      </ul>
+      <div class="meta">
+        <span><span class="k">Recommends</span> {{RECOMMENDS}} · {{CONFIDENCE}} confidence</span>
+        <span class="flip"><span class="k">Would flip if</span> {{FLIP_CONDITION}}</span>
+      </div>
+    </div>
+  </div>
+
+  <h2>Peer Review <span style="text-transform:none;letter-spacing:0;color:var(--muted)">· anonymized</span></h2>
+  <div class="peer">
+    <!-- PEER ROW -->
+    <div class="p"><span class="lbl">{{X}}</span>{{PEER_RESPONSE}}</div>
+  </div>
+
+  <h2>Chairman's Synthesis</h2>
+  <div class="chair">
+    <div class="block">
+      <div class="h">Where the room landed</div>
+      <p>{{SPREAD_READ}}</p>
+    </div>
+    <div class="block">
+      <div class="h">Key tensions</div>
+      <p>{{TENSIONS}}</p>
+    </div>
+    <div class="block call">
+      <div class="h">The call</div>
+      <p>{{RECOMMENDATION}}</p>
+    </div>
+    <div class="block premortem">
+      <div class="h">Pre-mortem · what this rests on</div>
+      <p>{{KEY_ASSUMPTION}} <strong>Flips if:</strong> {{EVIDENCE_THAT_FLIPS_IT}}</p>
+    </div>
+    <!-- MINORITY REPORT — include only if a high-confidence member contradicts the call; delete otherwise -->
+    <div class="block minority">
+      <div class="h">Minority report · {{DISSENTER}}</div>
+      <p>{{DISSENT_VERBATIM}}</p>
+    </div>
+    <div class="block">
+      <div class="h dealbreaker">Deal-breakers</div>
+      <p class="dealbreaker">{{DEALBREAKERS_OR_NONE}}</p>
+    </div>
+  </div>
+
+  <div class="foot">Convened by The Quorum · disagreement is the feature, not the bug</div>
+
+</div>
+</body>
+</html>

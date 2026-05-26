@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Quorum — Which candidate to hire</title>
+<style>
+  :root{
+    --ink:#1C1A1D; --ink-2:#252327; --ink-3:#2f2d31;
+    --lime:#E2F075; --text:#ffffff; --muted:#a7a4ab; --line:#3a383d;
+    --warn:#ffb4a2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--ink);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+    line-height:1.55;padding:48px 24px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:980px;margin:0 auto}
+  .eyebrow{color:var(--lime);font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
+  h1{font-size:30px;line-height:1.2;margin:10px 0 18px;font-weight:650;letter-spacing:-.01em}
+  h2{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+    font-weight:600;margin:46px 0 16px;border-bottom:1px solid var(--line);padding-bottom:10px}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+  .badge{font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px;
+    border:1px solid var(--line);color:var(--muted)}
+  .badge.door{background:rgba(226,240,117,.1);border-color:var(--lime);color:var(--lime)}
+  .spread{background:var(--ink-2);border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+  .spread .note{font-size:14px;color:#ececec;margin-bottom:6px}
+  .spread .note strong{color:var(--lime)}
+  .spread .group{padding:12px 0;border-bottom:1px solid var(--line)}
+  .spread .group:last-child{border-bottom:none}
+  .opt{font-weight:650;font-size:15px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .opt .count{color:var(--lime);font-size:13px;font-weight:600;white-space:nowrap}
+  .row{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted);padding:3px 0}
+  .row .who{color:var(--text);min-width:140px}
+  .dot{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--lime);flex:none}
+  .dot.high{background:var(--lime)}
+  .dot.medium{background:linear-gradient(90deg,var(--lime) 50%,transparent 50%)}
+  .dot.low{background:transparent}
+  .dot.none{border-style:dashed;background:transparent}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+  .card{background:var(--ink-2);border:1px solid var(--line);border-radius:14px;padding:20px;
+    transition:border-color .15s}
+  .card:hover{border-color:var(--lime)}
+  .card .name{font-size:17px;font-weight:650}
+  .card .lane{color:var(--lime);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    font-weight:600;margin-top:2px}
+  .card .verdict{font-size:14px;margin:14px 0;font-style:italic;color:#ececec}
+  .card ul{list-style:none;display:flex;flex-direction:column;gap:7px;margin:0 0 16px}
+  .card li{font-size:13.5px;color:var(--muted);padding-left:16px;position:relative}
+  .card li:before{content:"";position:absolute;left:0;top:8px;width:5px;height:5px;
+    border-radius:50%;background:var(--lime)}
+  .meta{border-top:1px solid var(--line);padding-top:12px;font-size:13px;display:flex;
+    flex-direction:column;gap:5px}
+  .meta .k{color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+  .meta .flip{color:#cfcdd2}
+  .peer{display:flex;flex-direction:column;gap:10px}
+  .peer .p{background:var(--ink-2);border:1px solid var(--line);border-left:3px solid var(--lime);
+    border-radius:0 10px 10px 0;padding:14px 18px;font-size:14px;color:#ececec}
+  .peer .p .lbl{font-weight:650;color:var(--lime);margin-right:8px}
+  .chair{background:linear-gradient(180deg,var(--ink-3),var(--ink-2));
+    border:1px solid var(--lime);border-radius:16px;padding:28px}
+  .chair .block{margin-bottom:18px}
+  .chair .block:last-child{margin-bottom:0}
+  .chair .h{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+    font-weight:600;margin-bottom:6px}
+  .chair p{font-size:15px;color:#ececec}
+  .call{background:rgba(226,240,117,.12);border:1px solid var(--lime);border-radius:12px;
+    padding:18px 20px}
+  .call .h{color:var(--lime)}
+  .call p{color:#fff;font-size:16px;font-weight:550}
+  .premortem{border:1px dashed var(--line);border-radius:12px;padding:16px 18px}
+  .minority{border:1px solid var(--warn);border-radius:12px;padding:16px 18px;background:rgba(255,180,162,.06)}
+  .minority .h{color:var(--warn)}
+  .dealbreaker{color:var(--warn)}
+  .foot{margin-top:40px;text-align:center;color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">The Quorum</div>
+  <h1>Which finalist do we hire for the senior leadership role?</h1>
+  <div class="badges">
+    <span class="badge door">One-way door</span>
+    <span class="badge">Stakes: high</span>
+    <span class="badge">5 members seated · Steward in for Reframer</span>
+    <span class="badge">Example</span>
+  </div>
+
+  <h2>The Spread</h2>
+  <div class="spread">
+    <p class="note"><strong>Genuine split — and the question may be wrong.</strong> The room divides between the proven hire and the high-ceiling bet, but two members refuse to pick: one names the fact that actually decides it, the other flags a candidate the menu ignored. People-heavy decision, so the Steward took the Reframer's seat.</p>
+    <div class="group">
+      <div class="opt">Candidate A — the proven operator <span class="count">2 backing (conditional)</span></div>
+      <div class="row"><span class="dot high"></span><span class="who">The Skeptic</span><span>med-high confidence</span></div>
+      <div class="row"><span class="dot high"></span><span class="who">The Operator</span><span>med-high confidence</span></div>
+    </div>
+    <div class="group">
+      <div class="opt">Candidate B — the high-ceiling bet <span class="count">1 backing (conditional)</span></div>
+      <div class="row"><span class="dot medium"></span><span class="who">The Strategist</span><span>medium-high confidence</span></div>
+    </div>
+    <div class="group">
+      <div class="opt">Off the menu — challenged the question <span class="count">2 voices</span></div>
+      <div class="row"><span class="dot none"></span><span class="who">The Analyst</span><span>names the decisive unknown — declines to pick</span></div>
+      <div class="row"><span class="dot medium"></span><span class="who">The Steward</span><span>flags an internal candidate the framing ignores</span></div>
+    </div>
+  </div>
+
+  <h2>The Council</h2>
+  <div class="cards">
+
+    <div class="card">
+      <div class="name">The Analyst</div>
+      <div class="lane">Epistemics</div>
+      <div class="verdict">"You can't pick until you know what actually predicts success in *this* seat — and you haven't checked."</div>
+      <ul>
+        <li>The whole choice assumes "experience" and "potential" are the axes. The real predictor is fit to the specific failure mode of this role — which is undefined.</li>
+        <li>Missing data: why the last person in this seat struggled or left, and what back-channel references (not the listed ones) actually say about each finalist.</li>
+        <li>"Higher ceiling" and "lower risk" are being asserted from résumés, not evidence. Both are hypotheses, not facts.</li>
+      </ul>
+      <div class="meta">
+        <span><span class="k">Decisive unknown</span> Is this a *stabilize* moment (the function needs reliable delivery) or a *level-up* moment (it needs reinvention)? The answer picks the candidate.</span>
+        <span class="flip"><span class="k">Would flip if</span> reference checks surfaced a concrete disqualifier on either side — then it's no longer a judgment call.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="name">The Skeptic</div>
+      <div class="lane">Downside</div>
+      <div class="verdict">"A senior seat is the most expensive place to bet on potential. If B misses, it's 6–12 months and a bruised team."</div>
+      <ul>
+        <li>The cost of a senior mis-hire isn't just salary — it's the lost time, the re-search, and the trust the team loses watching it unravel.</li>
+        <li>"High ceiling" usually means "unproven at this level." The ceiling only matters if they clear the floor first.</li>
+        <li>Counter-warning to myself: the "safe" hire isn't safe if the role genuinely needs reinvention — then A is just hiring for the last war.</li>
+      </ul>
+      <div class="meta">
+        <span><span class="k">Recommends</span> Candidate A, unless this is clearly a reinvention role · med-high confidence</span>
+        <span class="flip"><span class="k">Would flip if</span> the role's mandate is explicitly to transform the function — then proven-at-the-old-way is a liability.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="name">The Strategist</div>
+      <div class="lane">Time</div>
+      <div class="verdict">"A delivers now and quietly caps the team's ceiling. B, if they hit, becomes a multiplier you can't hire later."</div>
+      <ul>
+        <li>In three years, the proven operator has delivered competently and the function looks roughly as it does today. That's the cost nobody books.</li>
+        <li>The high-ceiling hire is the only path to a step-change — but only if the org is in a position to absorb the variance.</li>
+        <li>Highest-leverage move depends entirely on whether you're protecting a lead or trying to create one.</li>
+      </ul>
+      <div class="meta">
+        <span><span class="k">Recommends</span> Candidate B, *if* the org can resource and absorb the risk · medium-high confidence</span>
+        <span class="flip"><span class="k">Would flip if</span> the business needs stability over the next year more than it needs a step-change — then A's predictability wins.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="name">The Operator</div>
+      <div class="lane">Execution</div>
+      <div class="verdict">"Talent without a support structure fails anyway. Can you actually give B a strong #2, mentorship, and runway?"</div>
+      <ul>
+        <li>Candidate A is plug-and-play — productive in weeks, low management overhead. That has real, immediate value.</li>
+        <li>Candidate B's success is conditional on resources you may not have. Hiring potential into a vacuum is how potential gets wasted.</li>
+        <li>Do-nothing baseline: re-opening the search costs 2–3 months and there's no guarantee the next slate is better than these two.</li>
+      </ul>
+      <div class="meta">
+        <span><span class="k">Recommends</span> Candidate A, unless B can be properly resourced · med-high confidence</span>
+        <span class="flip"><span class="k">Would flip if</span> you have a genuine support structure ready for B — then the talent bet becomes fundable.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="name">The Steward</div>
+      <div class="lane">People</div>
+      <div class="verdict">"Who already wanted this role? Bringing in an outside star can cost you someone good you're not thinking about."</div>
+      <ul>
+        <li>An external hire over an internal hopeful sends a signal to the whole team about whether growth here is real. Watch who quietly updates.</li>
+        <li>Candidate A (if a known quantity) is low-disruption and builds trust; Candidate B arrives needing the team to invest in them before they've earned it.</li>
+        <li>The framing assumes the choice is A vs. B — but the most consequential person may be the internal candidate not on this shortlist.</li>
+      </ul>
+      <div class="meta">
+        <span><span class="k">Recommends</span> Resolve internal dynamics before choosing · medium-high confidence</span>
+        <span class="flip"><span class="k">Would flip if</span> there's no internal stakeholder affected and the team is indifferent to source — then it's purely a fit call.</span>
+      </div>
+    </div>
+
+  </div>
+
+  <h2>Peer Review <span style="text-transform:none;letter-spacing:0;color:var(--muted)">· anonymized</span></h2>
+  <div class="peer">
+    <div class="p"><span class="lbl">A</span>Agrees with E that the menu may be incomplete — both are pointing at the same gap from different angles (a missing fact, a missing person). Holds that no verdict is sound until the stabilize-vs-level-up question is answered; that, specifically, is what would move my position.</div>
+    <div class="p"><span class="lbl">B</span>Concedes C's point that "safe" can be a hidden liability — that's what changed my framing from "pick A" to "pick A unless this is a reinvention role." Still challenges C on magnitude: the downside of a senior miss is concrete and near-term; the upside of B is speculative and distant.</div>
+    <div class="p"><span class="lbl">C</span>Accepts D's resourcing constraint as the real gating factor — it's the difference between a bet and a gamble. Does not move on the core claim: defaulting to A has a cost that won't show up for two years, which is exactly why it gets underweighted.</div>
+    <div class="p"><span class="lbl">D</span>Agrees with A that this is being decided on résumés, not evidence. Adds that the do-nothing option (re-open) is more viable than the group is treating it — a forced binary between two imperfect finalists is itself a red flag.</div>
+    <div class="p"><span class="lbl">E</span>Aligns with A and D: the strongest move right now is not choosing, it's completing the picture. What changed nothing for me — the others still under-weight that the team is watching this decision as a signal, regardless of which candidate wins.</div>
+  </div>
+
+  <h2>Chairman's Synthesis</h2>
+  <div class="chair">
+    <div class="block">
+      <div class="h">Where the room landed</div>
+      <p>A real split, not a convergence. Two members lean Candidate A (proven, low-disruption) but both attach the same condition — *unless this role needs reinvention.* One member leans Candidate B as the only path to a step-change, conditional on the org resourcing it. And two members refuse the menu: the Analyst says the decision can't be made until you answer whether this is a stabilize moment or a level-up moment, and the Steward flags that the most affected person may be an internal candidate the shortlist ignores.</p>
+    </div>
+    <div class="block">
+      <div class="h">Key tensions</div>
+      <p>(1) Near-term, concrete downside of a senior mis-hire (Skeptic) vs. the invisible, compounding cost of capping the team's ceiling (Strategist). (2) Talent is only fundable if you can resource it (Operator) — the bet/gamble line. (3) The whole A-vs-B framing may be wrong: there's a decisive unknown unresolved and possibly a candidate off the list.</p>
+    </div>
+    <div class="block call">
+      <div class="h">The call</div>
+      <p>Don't choose yet — and that's not a dodge, it's the highest-value move available. Two cheap steps collapse most of the uncertainty: (1) Answer the Analyst's question explicitly — is the mandate to *stabilize* the function or *transform* it? Write it down; it largely picks the candidate. (2) Run real back-channel references and check the Steward's flag about an internal stakeholder. If it's a stabilize role and B can't be resourced, hire A with confidence. If it's a transform role and you can give B a real support structure, B is the higher-leverage bet worth the variance. The forced binary between two imperfect finalists is itself a signal that the picture isn't complete.</p>
+    </div>
+    <div class="block premortem">
+      <div class="h">Pre-mortem · what this rests on</div>
+      <p>This call assumes the stabilize-vs-transform question is answerable and that the two finalists are genuinely the field. <strong>Flips if:</strong> leadership can't actually agree on the mandate (then you have an org-alignment problem, not a hiring problem), or if a strong internal candidate exists and changes the whole calculus.</p>
+    </div>
+    <div class="block minority">
+      <div class="h">Minority report · The Strategist</div>
+      <p>"I'll go on record against any default to the safe hire. Choosing the proven operator won't feel like a mistake — it never does. It will feel like prudence, and in two years you'll have a competent function that never broke out, and no one will trace it back to this room. If you can resource Candidate B at all, the asymmetry favors the bet: A's downside is a quiet ceiling, B's upside is a multiplier you cannot acquire later. Don't let 'reasonable' quietly win by forfeit."</p>
+    </div>
+    <div class="block">
+      <div class="h dealbreaker">Deal-breakers</div>
+      <p class="dealbreaker">Operator: hiring Candidate B without a genuine support structure is setting talent up to fail — don't fund the bet you can't back. Skeptic: if you cannot articulate what specifically went wrong in this seat before, you're not ready to fill it with anyone.</p>
+    </div>
+  </div>
+
+  <div class="foot">Convened by The Quorum · disagreement is the feature, not the bug · illustrative example</div>
+
+</div>
+</body>
+</html>
