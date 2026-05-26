@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Quorum — Where should the next dollar of growth come from?</title>
+<style>
+  :root{
+    --ink:#1C1A1D; --ink-2:#252327; --ink-3:#2f2d31;
+    --lime:#E2F075; --text:#ffffff; --muted:#a7a4ab; --line:#3a383d;
+    --warn:#ffb4a2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--ink);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+    line-height:1.55;padding:48px 24px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:980px;margin:0 auto}
+  .eyebrow{color:var(--lime);font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
+  h1{font-size:30px;line-height:1.2;margin:10px 0 18px;font-weight:650;letter-spacing:-.01em}
+  h2{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+    font-weight:600;margin:46px 0 16px;border-bottom:1px solid var(--line);padding-bottom:10px}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+  .badge{font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px;
+    border:1px solid var(--line);color:var(--muted)}
+  .badge.door{background:rgba(226,240,117,.1);border-color:var(--lime);color:var(--lime)}
+  .spread{background:var(--ink-2);border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+  .spread .note{font-size:14px;color:#ececec;margin-bottom:6px}
+  .spread .note strong{color:var(--lime)}
+  .spread .group{padding:12px 0;border-bottom:1px solid var(--line)}
+  .spread .group:last-child{border-bottom:none}
+  .opt{font-weight:650;font-size:15px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .opt .count{color:var(--lime);font-size:13px;font-weight:600;white-space:nowrap}
+  .row{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted);padding:3px 0}
+  .row .who{color:var(--text);min-width:140px}
+  .dot{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--lime);flex:none}
+  .dot.high{background:var(--lime)}
+  .dot.medium{background:linear-gradient(90deg,var(--lime) 50%,transparent 50%)}
+  .dot.low{background:transparent}
+  .dot.none{border-style:dashed;background:transparent}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+  .card{background:var(--ink-2);border:1px solid var(--line);border-radius:14px;padding:20px;
+    transition:border-color .15s}
+  .card:hover{border-color:var(--lime)}
+  .card .name{font-size:17px;font-weight:650}
+  .card .lane{color:var(--lime);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    font-weight:600;margin-top:2px}
+  .card .verdict{font-size:14px;margin:14px 0;font-style:italic;color:#ececec}
+  .card ul{list-style:none;display:flex;flex-direction:column;gap:7px;margin:0 0 16px}
+  .card li{font-size:13.5px;color:var(--muted);padding-left:16px;position:relative}
+  .card li:before{content:"";position:absolute;left:0;top:8px;width:5px;height:5px;
+    border-radius:50%;background:var(--lime)}
+  .meta{border-top:1px solid var(--line);padding-top:12px;font-size:13px;display:flex;
+    flex-direction:column;gap:5px}
+  .meta .k{color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+  .meta .flip{color:#cfcdd2}
+  .peer{display:flex;flex-direction:column;gap:10px}
+  .peer .p{background:var(--ink-2);border:1px solid var(--line);border-left:3px solid var(--lime);
+    border-radius:0 10px 10px 0;padding:14px 18px;font-size:14px;color:#ececec}
+  .peer .p .lbl{font-weight:650;color:var(--lime);margin-right:8px}
+  .chair{background:linear-gradient(180deg,var(--ink-3),var(--ink-2));
+    border:1px solid var(--lime);border-radius:16px;padding:28px}
+  .chair .block{margin-bottom:18px}
+  .chair .block:last-child{margin-bottom:0}
+  .chair .h{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+    font-weight:600;margin-bottom:6px}
+  .chair p{font-size:15px;color:#ececec}
+  .call{background:rgba(226,240,117,.12);border:1px solid var(--lime);border-radius:12px;
+    padding:18px 20px}
+  .call .h{color:var(--lime)}
+  .call p{color:#fff;font-size:16px;font-weight:550}
+  .premortem{border:1px dashed var(--line);border-radius:12px;padding:16px 18px}
+  .minority{border:1px solid var(--warn);border-radius:12px;padding:16px 18px;background:rgba(255,180,162,.06)}
+  .minority .h{color:var(--warn)}
+  .dealbreaker{color:var(--warn)}
+  .foot{margin-top:40px;text-align:center;color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">The Quorum</div>
+  <h1>Where should our next dollar of growth come from?</h1>
+  <div class="badges">
+    <span class="badge door">Two-way door</span>
+    <span class="badge">Stakes: high</span>
+    <span class="badge">5 members seated</span>
+    <span class="badge">Example</span>
+  </div>
+
+  <h2>The Spread</h2>
+  <div class="spread">
+    <p class="note"><strong>Two backed acquisition, one fought for the base — and two refused to answer the question as asked.</strong> The acquisition case is real but conditional, and the conditions are unverified. The most important move turned out to be upstream of the whole debate.</p>
+    <div class="group">
+      <div class="opt">Go win new customers — acquisition <span class="count">2 backing</span></div>
+      <div class="row"><span class="dot high"></span><span class="who">The Operator</span><span>med-high confidence</span></div>
+      <div class="row"><span class="dot medium"></span><span class="who">The Strategist</span><span>medium confidence</span></div>
+    </div>
+    <div class="group">
+      <div class="opt">Expand and protect the base <span class="count">1 backing</span></div>
+      <div class="row"><span class="dot high"></span><span class="who">The Skeptic</span><span>med-high confidence</span></div>
+    </div>
+    <div class="group">
+      <div class="opt">Off the menu — challenged the question <span class="count">2 voices</span></div>
+      <div class="row"><span class="dot none"></span><span class="who">The Analyst</span><span>names the decisive unknown — declines to pick</span></div>
+      <div class="row"><span class="dot high"></span><span class="who">The Reframer</span><span>this may be a retention problem, not a growth one</span></div>
+    </div>
+  </div>
+
+  <h2>The Council</h2>
+  <div class="cards">
+
+    <div class="card">
+      <div class="name">The Analyst</div>
+      <div class="lane">Epistemics</div>
+      <div class="verdict">"Without two numbers, this is a vibes debate. You haven't put either on the table."</div>
+      <ul>
+        <li>The framing assumes growth must come from one of two places. It can't be answered without knowing the health of what you already have.</li>
+        <li>Net revenue retention is the hinge: below ~100% and you're acquiring into a leaky bucket — new logos just replace lost ones.</li>
+        <li>The acquisition arguments rest on assumptions ("the market's a land-grab," "the base is tapped") asserted as fact, not measured.</li>
+      </ul>
+      <div class="meta">
+        <span><span class="k">Decisive unknown</span> What is your net revenue retention, and what's the CAC payback on each motion? Those two numbers settle most of this.</span>
+        <span class="flip"><span class="k">Would flip if</span> NRR is already proven strong and payback is healthy — then it's not either/or, you can afford both.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="name">The Skeptic</div>
+      <div class="lane">Downside</div>
+      <div class="verdict">"New logos are the seductive number. They also paper over a leak until the math catches up."</div>
+      <ul>
+        <li>Retained and expansion revenue is the cheapest you'll ever get. Acquisition is rising-cost and the least efficient growth there is.</li>
+        <li>Chasing logos while the base churns is bailing water — you pay escalating CAC just to stand still.</li>
+        <li>Acquisition masks a retention problem for a few quarters. Then growth craters and you've spent the runway hiding it.</li>
+      </ul>
+      <div class="meta">
+        <span><span class="k">Recommends</span> Expand and protect the base before scaling acquisition · med-high confidence</span>
+        <span class="flip"><span class="k">Would flip if</span> the base is genuinely healthy (high NRR, low churn) and the market is a true land-grab — then speed beats efficiency.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="name">The Strategist</div>
+      <div class="lane">Time</div>
+      <div class="verdict">"A perfectly retained base in a category you lost is still a loss. Sometimes you have to take the market."</div>
+      <ul>
+        <li>Expansion compounds beautifully — but it caps at your TAM ceiling. If competitors are taking the category, a sticky base of shrinking share is a slow defeat.</li>
+        <li>In a land-grab, share captured early compounds into pricing power and a moat you can't buy back later.</li>
+        <li>The compounding that matters most here isn't revenue per account — it's category position while it's still winnable.</li>
+      </ul>
+      <div class="meta">
+        <span><span class="k">Recommends</span> Acquire — win the market while the window is open · medium confidence</span>
+        <span class="flip"><span class="k">Would flip if</span> the market isn't time-sensitive — then expansion's efficiency and durability win easily.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="name">The Operator</div>
+      <div class="lane">Execution</div>
+      <div class="verdict">"Fund the motion your machine can actually run. And whatever you pick — don't split the dollar."</div>
+      <ul>
+        <li>Expansion is the cheaper win only if there's something more to sell and a customer-success motion to sell it. If the base is fully penetrated, that's a fantasy.</li>
+        <li>If your pipeline machinery is the muscle you've actually built, acquisition is the executable next dollar.</li>
+        <li>The real failure mode is the hedge: a 50/50 split underfunds both motions and wins neither. Concentrate.</li>
+      </ul>
+      <div class="meta">
+        <span><span class="k">Recommends</span> Acquire if the base is tapped — but pick one motion, don't split · med-high confidence</span>
+        <span class="flip"><span class="k">Would flip if</span> there's clear upsell headroom and a CS engine in place — then expansion is the faster, cheaper win.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="name">The Reframer</div>
+      <div class="lane">The frame</div>
+      <div class="verdict">"Why are we chasing new logos when we can't say why the current ones keep leaving?"</div>
+      <ul>
+        <li>"Acquire vs. expand" assumes the bucket holds. The question underneath it is whether you have a retention problem wearing a growth-problem costume.</li>
+        <li>Churn is invisible in the topline if acquisition is fast enough — so teams "fix" stalling growth by acquiring harder, and pour money into the leak.</li>
+        <li>The highest-leverage dollar here might not be a growth dollar at all. It might be a retention dollar.</li>
+      </ul>
+      <div class="meta">
+        <span><span class="k">Recommends</span> Reframe → diagnose retention first; the allocation question is premature · med-high confidence</span>
+        <span class="flip"><span class="k">Would flip if</span> retention is already proven strong — then the leak isn't the issue and it's a clean acquire-vs-expand call.</span>
+      </div>
+    </div>
+
+  </div>
+
+  <h2>Peer Review <span style="text-transform:none;letter-spacing:0;color:var(--muted)">· anonymized</span></h2>
+  <div class="peer">
+    <div class="p"><span class="lbl">A</span>Agrees with E that the retention question sits upstream of the whole debate — it's the same gap I'm flagging, stated as a risk instead of a metric. Challenges C: "take the market" is a strong instinct built on an unmeasured premise. Show me the share math before betting the budget on it.</div>
+    <div class="p"><span class="lbl">B</span>Strongly backs E. Pushes on C: the land-grab story is the most expensive one to be wrong about — if the base is leaking, you're funding a moat that drains out the bottom. Conviction about the market doesn't fix the bucket.</div>
+    <div class="p"><span class="lbl">C</span>Concedes to A and B that the land-grab claim needs evidence, not vibes. Holds the core point: the room is so focused on efficiency it's underweighting timing. Efficient growth into a category you've already lost is just a tidy loss.</div>
+    <div class="p"><span class="lbl">D</span>What changed: E and B moved me. I still say pick one motion and fund it properly — but I'll concede the honest first move is diagnosing the base, because if it's leaking, neither motion I was choosing between actually pays.</div>
+    <div class="p"><span class="lbl">E</span>Notes the acquire-vs-expand fight mostly dissolves once you answer one question: does the base hold? If yes, it's C's timing call. If no, both options are just different ways to fund churn. The debate everyone's having is the second question. The first one is the one that matters.</div>
+  </div>
+
+  <h2>Chairman's Synthesis</h2>
+  <div class="chair">
+    <div class="block">
+      <div class="h">Where the room landed</div>
+      <p>On the surface, a lean toward acquisition — two of five. But both acquisition cases are explicitly conditional: the Strategist's rests on a land-grab market, the Operator's on a fully-tapped base, and neither condition has been verified. The Skeptic makes the efficiency case for the base. And the two off-menu voices relocate the decision entirely: the Analyst says you can't allocate without net revenue retention and CAC payback, and the Reframer names the risk nobody wanted to say out loud — this may be a retention problem dressed as a growth problem.</p>
+    </div>
+    <div class="block">
+      <div class="h">Key tensions</div>
+      <p>(1) The Strategist's timing case ("take the market now") vs. the Skeptic's efficiency case ("retained revenue is the cheapest revenue") — both right, in different markets. (2) Every acquisition argument is built on an unmeasured assumption. (3) The whole acquire-vs-expand frame may be premature: if the base leaks, both options just fund churn at different prices.</p>
+    </div>
+    <div class="block call">
+      <div class="h">The call</div>
+      <p>Don't fund either growth motion yet. Spend the next two weeks answering one question: does the base hold? Pull net revenue retention and churn by segment, and CAC payback on each motion. If NRR is below ~100%, the next dollar is a retention dollar, not a growth dollar — acquiring into a leaky bucket just funds the leak faster, and expanding a base that's churning is pushing on a string. If the base is healthy, then it's a genuine acquire-vs-expand call, and it turns on the Strategist's question: is this a time-sensitive land-grab (acquire and take share now) or a market with room to wait (expand the durable, compounding base)? It's a two-way door — once you have the retention read, move decisively on the motion it points to, and don't hedge the dollar across both.</p>
+    </div>
+    <div class="block premortem">
+      <div class="h">Pre-mortem · what this rests on</div>
+      <p>This assumes retention is measurable and fixable in a useful timeframe. <strong>Flips if:</strong> NRR is already proven strong — then skip the diagnosis and go straight to the land-grab-vs-wait call. It also flips if the market window is closing so fast that the cost of waiting two weeks to diagnose exceeds the cost of the leak — in which case the Strategist's "take the market now" case dominates and you acquire while you fix the base in parallel.</p>
+    </div>
+    <div class="block minority">
+      <div class="h">Minority report · The Strategist</div>
+      <p>"I'll dissent from 'diagnose first.' In a genuine land-grab, that two-week pause is a luxury you're borrowing against your future market share. Categories get decided fast, and the company that takes the share gets the pricing power, the data, and the moat — the loser gets a beautifully retained base in a market that no longer matters. If the window is real, acquire now and fix the leak in parallel. Retention you can repair next quarter. Lost category position you usually cannot."</p>
+    </div>
+    <div class="block">
+      <div class="h dealbreaker">Deal-breakers</div>
+      <p class="dealbreaker">Skeptic: scaling acquisition against a sub-100% NRR base is setting money on fire — do not pour pipeline budget into a bucket you know is leaking. Operator: splitting the dollar 50/50 across both motions underfunds both and wins neither; whatever the data says, concentrate.</p>
+    </div>
+  </div>
+
+  <div class="foot">Convened by The Quorum · disagreement is the feature, not the bug · illustrative example</div>
+
+</div>
+</body>
+</html>
