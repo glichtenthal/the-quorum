@@ -40,7 +40,9 @@ An interactive dashboard with:
 
 There's also an optional **decision journal** — log the call and its flip-conditions, then revisit later against what actually happened. Over time it shows you how *you* decide: where you're well-calibrated, and where you're not.
 
-> **See it in action:** open [`examples/hiring-decision.html`](examples/hiring-decision.html) in a browser — a worked "which finalist do we hire" decision showing the split, the Steward swapping in, and a minority report.
+> **See it in action:** open either worked example in a browser —
+> - [`examples/hiring-decision.html`](examples/hiring-decision.html) — "which finalist do we hire," showing a genuine split, the Steward swapping in, and a minority report.
+> - [`examples/side-project-leap.html`](examples/side-project-leap.html) — "should I quit my job for my side project," showing the council rejecting the framing itself and a high-conviction dissent preserved as a minority report.
 
 ---
 
@@ -103,7 +105,8 @@ the-quorum/
 │   ├── report-template.html      # the dashboard scaffold (themeable)
 │   └── decision-journal.md       # the calibration loop
 ├── examples/
-│   └── hiring-decision.html      # a worked example
+│   ├── hiring-decision.html      # worked example — a real split
+│   └── side-project-leap.html    # worked example — council rejects the framing
 ├── README.md
 └── LICENSE
 ```
