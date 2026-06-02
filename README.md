@@ -2,9 +2,11 @@
 
 **A decision gets sharper when it survives disagreement.**
 
-The Quorum is a [Claude Skill](https://docs.claude.com) that convenes five differentiated experts to pressure-test a decision. Each one forms a verdict *independently*, then they challenge each other in anonymous peer review, and a chairman synthesizes a calibrated recommendation — with a pre-mortem, a preserved minority report, and a clear next step. It's delivered as an interactive HTML dashboard.
+The Quorum is an agent skill for Claude and Codex that convenes five differentiated experts to pressure-test a decision. Each one forms a verdict *independently*, then they challenge each other in anonymous peer review, and a chairman synthesizes a calibrated recommendation — with a pre-mortem, a preserved minority report, and a clear next step. It's delivered as an interactive HTML dashboard.
 
 The point isn't consensus. It's **surfaced, structured disagreement you can actually act on.** Most "get a second opinion" tools quietly optimize to agree with you. This one is built to push back.
+
+![The Quorum decision dashboard preview](assets/quorum-preview.png)
 
 ---
 
@@ -47,7 +49,7 @@ There's also an optional **decision journal** — log the call and its flip-cond
 
 ---
 
-## Install
+## Install for Claude
 
 1. Download `the-quorum.skill` from the [latest release](../../releases) (or package it yourself — see below).
 2. Add it to Claude via your Skills settings.
@@ -58,6 +60,25 @@ quorum this: should we rebuild our billing system in-house or buy the SaaS tool?
 ```
 
 `council this` works too. You can also just describe a decision — the skill is built to trigger on its own when you're clearly weighing a consequential choice.
+
+## Install for Codex
+
+Ask Codex:
+
+```text
+Install my Quorum skill from https://github.com/glichtenthal/the-quorum
+```
+
+Or install manually:
+
+```bash
+python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-github.py \
+  --repo glichtenthal/the-quorum \
+  --path . \
+  --name the-quorum
+```
+
+Restart Codex after installation.
 
 ### Good first decisions to try
 
@@ -101,6 +122,10 @@ python -m scripts.package_skill path/to/the-quorum
 ```
 the-quorum/
 ├── SKILL.md                      # the workflow
+├── agents/
+│   └── openai.yaml               # Codex UI metadata
+├── assets/
+│   └── quorum-preview.png        # README preview
 ├── references/
 │   ├── persona-prompts.md        # the five council members + the Steward
 │   ├── report-template.html      # the dashboard scaffold (themeable)
