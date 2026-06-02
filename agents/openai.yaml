@@ -1,0 +1,4 @@
+interface:
+  display_name: "The Quorum"
+  short_description: "Pressure-test decisions with an expert council"
+  default_prompt: "Use $the-quorum to pressure-test this decision from every angle."
