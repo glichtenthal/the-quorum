@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640">
+  <defs>
+    <linearGradient id="qBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#123C8C"/>
+      <stop offset="1" stop-color="#071B4A"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="640" fill="url(#qBg)"/>
+  <rect x="64" y="64" width="1152" height="512" rx="28" fill="none" stroke="#9EE7FF" stroke-width="2" opacity="0.45"/>
+  <text x="112" y="184" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="96" font-weight="800">The Quorum</text>
+  <text x="118" y="254" fill="#9EE7FF" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="700">Structured dissent for</text>
+  <text x="118" y="308" fill="#9EE7FF" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="700">sharper decisions</text>
+  <text x="118" y="378" fill="#D7F6FF" font-family="Arial, Helvetica, sans-serif" font-size="30">Five lenses. Independent verdicts.</text>
+  <text x="118" y="418" fill="#D7F6FF" font-family="Arial, Helvetica, sans-serif" font-size="30">One calibrated call.</text>
+  <rect x="118" y="478" width="358" height="54" rx="27" fill="#9EE7FF"/>
+  <text x="146" y="514" fill="#071B4A" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="800">Claude + Codex agent skill</text>
+  <g transform="translate(674 166)">
+    <rect x="0" y="0" width="156" height="124" rx="18" fill="#FFFFFF" opacity="0.12" stroke="#9EE7FF" stroke-width="2"/>
+    <rect x="190" y="0" width="156" height="124" rx="18" fill="#FFFFFF" opacity="0.18" stroke="#9EE7FF" stroke-width="2"/>
+    <rect x="380" y="0" width="156" height="124" rx="18" fill="#FFFFFF" opacity="0.12" stroke="#9EE7FF" stroke-width="2"/>
+    <rect x="95" y="160" width="156" height="124" rx="18" fill="#FFFFFF" opacity="0.16" stroke="#9EE7FF" stroke-width="2"/>
+    <rect x="285" y="160" width="156" height="124" rx="18" fill="#FFFFFF" opacity="0.22" stroke="#9EE7FF" stroke-width="2"/>
+    <circle cx="78" cy="48" r="15" fill="#9EE7FF"/>
+    <circle cx="268" cy="48" r="15" fill="#9EE7FF"/>
+    <circle cx="458" cy="48" r="15" fill="#9EE7FF"/>
+    <circle cx="173" cy="208" r="15" fill="#9EE7FF"/>
+    <circle cx="363" cy="208" r="15" fill="#9EE7FF"/>
+    <text x="34" y="98" fill="#D7F6FF" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700">ANALYST</text>
+    <text x="235" y="98" fill="#D7F6FF" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700">SKEPTIC</text>
+    <text x="415" y="98" fill="#D7F6FF" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700">OPERATOR</text>
+    <text x="124" y="258" fill="#D7F6FF" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700">STRATEGIST</text>
+    <text x="316" y="258" fill="#D7F6FF" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700">REFRAMER</text>
+    <path d="M156 62 H190 M346 62 H380 M173 160 L173 124 M363 160 L363 124" stroke="#9EE7FF" stroke-width="3" opacity="0.65"/>
+  </g>
+</svg>

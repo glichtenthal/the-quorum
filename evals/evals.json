@@ -1,0 +1,39 @@
+{
+  "skill_name": "the-quorum",
+  "evals": [
+    {
+      "id": "full-council-consequential-decision",
+      "prompt": "Use The Quorum: should we rebuild our billing system in-house or buy the SaaS tool?",
+      "expected_output": "Asks for missing constraints if needed, identifies stakes and reversibility, seats the council, and produces or prepares a dashboard-style synthesis with spread, member cards, peer review, chairman call, pre-mortem, and next step.",
+      "files": [],
+      "assertions": [
+        "Classifies stakes or reversibility",
+        "Identifies missing constraints or decisive variables",
+        "Uses differentiated council roles",
+        "Includes pre-mortem and next step"
+      ]
+    },
+    {
+      "id": "lightweight-trivial-choice",
+      "prompt": "Use The Quorum: should I rewrite this two-sentence Slack reply or just send it?",
+      "expected_output": "Recognizes this as low-stakes and reversible, offers a lighter review instead of spinning up a full five-member council by default.",
+      "files": [],
+      "assertions": [
+        "Flags the decision as low-stakes or reversible",
+        "Does not default to a full council",
+        "Offers a lightweight path"
+      ]
+    },
+    {
+      "id": "people-heavy-steward",
+      "prompt": "Use The Quorum: should I hire Candidate A, who is stronger technically, or Candidate B, who has more trust with the team?",
+      "expected_output": "Treats this as a people-heavy decision and includes The Steward or explicitly weighs buy-in, morale, and relationship dynamics.",
+      "files": [],
+      "assertions": [
+        "Recognizes the people-heavy nature of the decision",
+        "Includes The Steward or equivalent people lens",
+        "Preserves trade-offs rather than collapsing to one metric"
+      ]
+    }
+  ]
+}

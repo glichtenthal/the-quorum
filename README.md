@@ -1,5 +1,7 @@
 # The Quorum
 
+![The Quorum social preview](assets/social-preview.svg)
+
 **A decision gets sharper when it survives disagreement.**
 
 The Quorum is an agent skill for Claude and Codex that convenes five differentiated experts to pressure-test a decision. Each one forms a verdict *independently*, then they challenge each other in anonymous peer review, and a chairman synthesizes a calibrated recommendation — with a pre-mortem, a preserved minority report, and a clear next step. It's delivered as an interactive HTML dashboard.
@@ -51,7 +53,7 @@ There's also an optional **decision journal** — log the call and its flip-cond
 
 ## Install for Claude
 
-1. Download `the-quorum.skill` from the [latest release](../../releases) (or package it yourself — see below).
+1. Download [the-quorum.skill](https://github.com/glichtenthal/the-quorum/releases/download/v1.0/the-quorum.skill) from the latest release, then add it through your Skills settings.
 2. Add it to Claude via your Skills settings.
 3. Convene:
 
@@ -109,6 +111,14 @@ Worth being straight about:
 - **Roster:** edit `references/persona-prompts.md` to retune a member or change who's on the bench.
 - **Workflow:** `SKILL.md` is the whole thing in plain language — readable and editable.
 
+## Version history
+
+See [CHANGELOG.md](CHANGELOG.md).
+
+## More agent skills
+
+- **[Ground Truth](https://github.com/glichtenthal/ground-truth)** - calibrated honesty and anti-sycophancy for plans, decisions, reviews, and ideas.
+
 ## Build the `.skill` yourself
 
 The repo *is* the skill. To package it into an installable file, use the packager from Anthropic's [skill-creator](https://github.com/anthropics/skills) tooling:
@@ -125,7 +135,10 @@ the-quorum/
 ├── agents/
 │   └── openai.yaml               # Codex UI metadata
 ├── assets/
-│   └── quorum-preview.png        # README preview
+│   ├── quorum-preview.png        # README preview
+│   └── social-preview.svg        # README social preview
+├── evals/
+│   └── evals.json                # behavior checks
 ├── references/
 │   ├── persona-prompts.md        # the five council members + the Steward
 │   ├── report-template.html      # the dashboard scaffold (themeable)
