@@ -117,6 +117,7 @@ See [CHANGELOG.md](CHANGELOG.md).
 
 ## More agent skills
 
+- **[The Briefing Room](https://github.com/glichtenthal/briefing-room)** - turns messy context into a structured brief a human can think with.
 - **[Ground Truth](https://github.com/glichtenthal/ground-truth)** - calibrated honesty and anti-sycophancy for plans, decisions, reviews, and ideas.
 
 ## Build the `.skill` yourself

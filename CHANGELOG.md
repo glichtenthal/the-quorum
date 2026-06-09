@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.1 - 2026-06-09
+
+- Added The Briefing Room to related agent skills now that the bundle includes three public skills.
+
 ## v1.0 - 2026-06-03
 
 - Published The Quorum as a portable Claude and Codex agent skill.
