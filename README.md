@@ -119,7 +119,7 @@ See [CHANGELOG.md](CHANGELOG.md).
 
 - **[The Briefing Room](https://github.com/glichtenthal/briefing-room)** - turns messy context into a structured brief a human can think with.
 - **[Ground Truth](https://github.com/glichtenthal/ground-truth)** - calibrated honesty and anti-sycophancy for plans, decisions, reviews, and ideas.
-- **[Test Drive](https://github.com/glichtenthal/test-drive)** - try an idea before you trust it.
+- **[Test Drive](https://github.com/glichtenthal/test-drive)** - test an idea, claim, or decision before trusting it.
 
 ## Build the `.skill` yourself
 
